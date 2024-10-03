@@ -1,4 +1,4 @@
-package chapter6;
+package chapter6_2;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,22 +10,8 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-public class Assertions {
-    /**
-     * Assertions has 3 parameters
-     * Expected result, Actual result and the message if test fails.
+public class HardAsserts {
 
-     * Junit tests can be migrated into TestNG and they will continue to run
-     * without any additional work with org.testng.AssertJunit class.
-
-     * org.testng.AssertJunit
-     * org.testng.Assert
-
-     * Asserts will compare Actual and expected value
-     * and make your test pass or fail based on output.
-     */
-
-    //driver will be used by test methods, so I keep is in class level.
     WebDriver driver;
     String username_txt;
     String password_txt;
@@ -79,17 +65,34 @@ public class Assertions {
                 "×";
 
         Assert.assertEquals(ActualMessage, ExpectedMessage,"Secure Area Message is not Correct!");
+
     }
 
+    /**
+     * Hard Assert example will be applied in here
+     * We will try 2 asserts in this test
+     * 1 assert will verify logout message
+     * 1 assert will verify currentURL after logout button click
+     */
     @Test(priority = 3, dependsOnMethods = "VerifySecureAreaMessage")
     public void UserSignout(){
+
         driver.findElement(By.xpath("//a[contains(@href,'logout')]")).click();
 
         String actualPageURL = driver.getCurrentUrl();
         String ExpectedPageURL = "https://the-internet.herokuapp.com/login";
 
+        //Locate Logout message after signout
+        String ActualSignoutMessage = driver.findElement(By.xpath("//div[@id='flash-messages']")).getText();
+        String ExpectedSignoutMessage = "You logged out";
         System.out.println(actualPageURL);
 
-        Assert.assertEquals(actualPageURL, ExpectedPageURL,"User Signout Failed!");
+        Assert.assertEquals(actualPageURL, ExpectedPageURL,"User Sign out Fail!");
+        //Just to show status of hard assert 1
+        System.out.println("1. Assert Verify Page URL after sign out!");
+
+        Assert.assertTrue(ActualSignoutMessage.contains(ExpectedSignoutMessage),"Sign out message Fail!");
+        //Just to show status of hard assert 2
+        System.out.println("2. Assert Verify Page URL after sign out!");
     }
 }
