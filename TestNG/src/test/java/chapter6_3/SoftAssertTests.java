@@ -21,11 +21,9 @@ public class SoftAssertTests {
     public void setup(){
         //Driver configuration
         driver = new ChromeDriver();
-
         //if 2nd display on left, x will be minus number
         //if 2nd display on right, x will be positive number
         driver.manage().window().setPosition(new Point(-1500,0));//display 2
-
         //Maximize Window
         driver.manage().window().maximize();
         //Wait maximum 5 seconds for each element interaction before throwing the error.
@@ -96,6 +94,23 @@ public class SoftAssertTests {
         //Locate Logout message after signout
         String ActualSignoutMessage = driver.findElement(By.xpath("//div[@id='flash-messages']")).getText();
         String ExpectedSignoutMessage = "You logged out";
+     * Hard Assert example will be applied in here
+     * We will try 2 asserts in this test
+     * 1 assert will verify logout message
+     * 1 assert will verify currentURL after logout button click
+     */
+    @Test(priority = 3, dependsOnMethods = "VerifySecureAreaMessage")
+    public void UserSignout(){
+
+        driver.findElement(By.xpath("//a[contains(@href,'logout')]")).click();
+
+        String actualPageURL = driver.getCurrentUrl();
+        String ExpectedPageURL = "https://the-internet.herokuapp.com/logn";
+
+        //Locate Logout message after signout
+        String ActualSignoutMessage = driver.findElement(By.xpath("//div[@id='flash-messages']")).getText();
+        String ExpectedSignoutMessage = "You logged ot";
+       
         System.out.println(actualPageURL);
 
         //initialize SoftAssert class
@@ -104,6 +119,7 @@ public class SoftAssertTests {
 
         //Replace Assert class with SoftAssert
         softAssert.assertEquals(actualPageURL, ExpectedPageURL,"URL Fail!");
+
         //Just to show status of hard assert 1
         System.out.println("1. Soft Assert Verify Page URL after sign out!");
 
