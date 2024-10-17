@@ -1,6 +1,7 @@
 package chapter7;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,7 +16,14 @@ public class Dependency_dependsOnGroup {
 
     @BeforeClass()
     public void test1_SetUpChrome(){
+
         driver = new ChromeDriver();
+
+        //if 2nd display on left, x will be minus number
+        //if 2nd display on right, x will be positive number
+        driver.manage().window().setPosition(new Point(-1500,0));//display 2
+
+        driver.manage().window().maximize();
     }
 
     //@Test(groups = "SignIn Group")
