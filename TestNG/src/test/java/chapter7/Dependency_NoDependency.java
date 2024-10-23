@@ -25,7 +25,6 @@ public class Dependency_NoDependency {
         driver.manage().window().maximize();
     }
 
-    //@Test(groups = "SignIn Group")
     @Test()
     public void test2_OpenLoginPage(){
         driver.get(url);

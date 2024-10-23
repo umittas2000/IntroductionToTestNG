@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 public class Dependency_WithDependency {
     private WebDriver driver;
-    private String url ="https://the-internet.herokuapp.com/login";
+    private String url ="https://the-internet.herokuapp.com/login.";
 
     @BeforeClass()
     public void test1_SetUpChrome(){
